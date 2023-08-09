@@ -1,5 +1,5 @@
 {
-  "name": "ammo-three",
+  "name": "helmet",
   "version": "1.0.0",
   "scripts": {
     "dev": "vite",
@@ -7,11 +7,8 @@
     "build": "vite build"
   },
   "dependencies": {
-    "@repcomm/three.terrain": "^1.6.0",
     "@tresjs/cientos": "^3.0.1",
     "@tresjs/core": "^3.0.1",
-    "ammojs-typed": "^1.0.6",
-    "nanoid": "^4.0.0",
     "three": "^0.144.0",
     "vue": "^3.2.37"
   },
