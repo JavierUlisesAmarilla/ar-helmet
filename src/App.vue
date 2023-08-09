@@ -1,4 +1,4 @@
-<script setup lang='ts' >
+<script setup>
 import { TresCanvas } from '@tresjs/core'
 import { OrbitControls } from '@tresjs/cientos'
 </script>
