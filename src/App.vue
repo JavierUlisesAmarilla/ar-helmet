@@ -182,14 +182,13 @@ onMounted(() => {
 
 
 <template>
-  <canvas id='jeeFaceFilterCanvas'></canvas>
-  <!-- <TresCanvas>
-    <TresPerspectiveCamera></TresPerspectiveCamera>
+  <TresCanvas id="jeeFaceFilterCanvas">
+    <!-- <TresPerspectiveCamera></TresPerspectiveCamera>
     <TresMesh>
       <TresTorusGeometry :args="[1, 0.5, 16, 32]"></TresTorusGeometry>
       <TresMeshBasicMaterial color="orange"></TresMeshBasicMaterial>
     </TresMesh>
     <TresAmbientLight :intensity="1"></TresAmbientLight>
-    <OrbitControls></OrbitControls>
-  </TresCanvas> -->
+    <OrbitControls></OrbitControls> -->
+  </TresCanvas>
 </template>
