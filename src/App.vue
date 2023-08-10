@@ -8,7 +8,6 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js'
 
 // some global
 let THREECAMERA = null
-let helmetGltf = null
 const { pane } = useTweakPane()
 
 
@@ -28,10 +27,14 @@ function init_threeScene(spec) {
   const threeStuffs = JeelizThreeHelper.init(spec, detect_callback)
   const HELMETOBJ3D = new THREE.Object3D()
   let faceMesh = null
+  let helmetGltf = null
 
-  // LOAD HELMET MODEL
   const loadingManager = new THREE.LoadingManager()
   const gltfLoader = new GLTFLoader(loadingManager)
+  const maskLoader = new THREE.BufferGeometryLoader(loadingManager)
+  const textureLoader = new THREE.TextureLoader()
+
+  // LOAD HELMET MODEL
   gltfLoader.load('models/helmet/helmet.glb', function (gltf) {
     gltf.scene.scale.set(8, 8, 8)
     gltf.scene.rotation.y = -Math.PI * 0.6
@@ -40,7 +43,6 @@ function init_threeScene(spec) {
   })
 
   // CREATE THE MASK
-  const maskLoader = new THREE.BufferGeometryLoader(loadingManager)
   /*
     faceLowPolyEyesEarsFill.json has been exported from dev/faceLowPolyEyesEarsFill.blend
     using THREE.JS blender exporter with Blender v2.76
@@ -114,6 +116,27 @@ function init_threeScene(spec) {
         folder.addInput(params, 'color').on('change', (e) => {
           child.material.color.setRGB(e.value.r / 255, e.value.g / 255, e.value.b / 255)
         })
+
+        if (child.material.map) {
+          folder.addBlade({
+            view: 'list',
+            label: 'texture',
+            options: [
+              { text: 'None', value: '' },
+              { text: 'Eagle', value: 'images/logo1.png' },
+              { text: 'Mark', value: 'images/logo2.png' },
+            ],
+            value: '',
+          }).on('change', (e) => {
+            if (e.value) {
+              textureLoader.load(e.value, (texture) => {
+                child.material.map = texture
+              })
+            } else {
+              child.material.map = null
+            }
+          })
+        }
       }
     })
   }
