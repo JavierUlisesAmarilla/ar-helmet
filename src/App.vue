@@ -2,12 +2,14 @@
 
 import { onMounted } from 'vue'
 import { TresCanvas } from '@tresjs/core'
-import { OrbitControls } from '@tresjs/cientos'
+import { OrbitControls, useTweakPane } from '@tresjs/cientos'
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js'
 
 
-// some globalz:
+// some global
 let THREECAMERA = null
+let helmetGltf = null
+const { pane } = useTweakPane()
 
 
 // callback: launched if a face is detected or lost
@@ -25,7 +27,7 @@ function init_threeScene(spec) {
   // CREATE THE HELMET MESH AND ADD IT TO THE SCENE:
   const threeStuffs = JeelizThreeHelper.init(spec, detect_callback)
   const HELMETOBJ3D = new THREE.Object3D()
-  let faceMesh = null, helmetGltf = null
+  let faceMesh = null
 
   // LOAD HELMET MODEL
   const loadingManager = new THREE.LoadingManager()
@@ -95,8 +97,25 @@ function init_threeScene(spec) {
   loadingManager.onLoad = () => {
     threeStuffs.faceObject.add(HELMETOBJ3D)
     HELMETOBJ3D.add(faceMesh)
-    // console.log('test: helmetGltf: ', helmetGltf)
     HELMETOBJ3D.add(helmetGltf.scene)
+
+    helmetGltf.scene.traverse((child) => {
+      if (child.isMesh) {
+        const folder = pane.addFolder({
+          title: child.name
+        })
+        const params = {
+          color: new THREE.Color(
+            child.material.color.r * 255,
+            child.material.color.g * 255,
+            child.material.color.b * 255,
+          )
+        }
+        folder.addInput(params, 'color').on('change', (e) => {
+          child.material.color.setRGB(e.value.r / 255, e.value.g / 255, e.value.b / 255)
+        })
+      }
+    })
   }
 
   // CREATE THE VIDEO BACKGROUND
