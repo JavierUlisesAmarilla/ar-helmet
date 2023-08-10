@@ -35,12 +35,22 @@ function init_threeScene(spec) {
   const textureLoader = new THREE.TextureLoader()
 
   // LOAD HELMET MODEL
-  gltfLoader.load('models/helmet/helmet.glb', function (gltf) {
-    gltf.scene.scale.set(8, 8, 8)
-    gltf.scene.rotation.y = -Math.PI * 0.6
-    gltf.scene.position.set(0, 0.5, -0.11)
-    helmetGltf = gltf
-  })
+  gltfLoader.load(
+    // 'models/helmet/helmet.glb',
+    'models/helmet/Helmet_Knight.gltf',
+
+    function (gltf) {
+      // gltf.scene.scale.set(8, 8, 8)
+      // gltf.scene.rotation.y = -Math.PI * 0.6
+      // gltf.scene.position.set(0, 0.5, -0.11)
+
+      gltf.scene.scale.set(7.5, 8, 7.5)
+      gltf.scene.rotation.y = -Math.PI * 0.5
+      gltf.scene.position.set(0, 0.2, -0.17)
+
+      helmetGltf = gltf
+    }
+  )
 
   // CREATE THE MASK
   /*
