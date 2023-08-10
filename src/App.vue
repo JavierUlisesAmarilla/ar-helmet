@@ -2,6 +2,7 @@
 import { onMounted } from 'vue'
 import { TresCanvas } from '@tresjs/core'
 import { OrbitControls } from '@tresjs/cientos'
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
 
 // some globalz:
@@ -68,6 +69,13 @@ function init_threeScene(spec) {
   );
 
 
+  const gltfLoader = new GLTFLoader(loadingManager);
+  let soldierGltf = null
+  gltfLoader.load('models/helmet/helmet.glb', function (gltf) {
+    soldierGltf = gltf
+  })
+
+
   // CREATE THE MASK
   const maskLoader = new THREE.BufferGeometryLoader(loadingManager);
 
@@ -126,13 +134,14 @@ function init_threeScene(spec) {
   })
 
   loadingManager.onLoad = () => {
-    HELMETOBJ3D.add(helmetMesh);
-    HELMETOBJ3D.add(visorMesh);
-    HELMETOBJ3D.add(faceMesh);
-
-    // addDragEventListener(HELMETOBJ3D);
-
     threeStuffs.faceObject.add(HELMETOBJ3D);
+    // HELMETOBJ3D.add(helmetMesh);
+    // HELMETOBJ3D.add(visorMesh);
+    HELMETOBJ3D.add(faceMesh);
+    soldierGltf.scene.scale.set(8, 8, 8)
+    soldierGltf.scene.rotation.y = -Math.PI * 0.6
+    soldierGltf.scene.position.set(0, 0.44, 0)
+    HELMETOBJ3D.add(soldierGltf.scene);
   }
 
 
