@@ -95,6 +95,7 @@ function init_threeScene(spec) {
   loadingManager.onLoad = () => {
     threeStuffs.faceObject.add(HELMETOBJ3D)
     HELMETOBJ3D.add(faceMesh)
+    // console.log('test: helmetGltf: ', helmetGltf)
     HELMETOBJ3D.add(helmetGltf.scene)
   }
 
@@ -132,12 +133,17 @@ function init_threeScene(spec) {
   THREECAMERA = JeelizThreeHelper.create_camera()
 
   // CREATE THE LIGHTS:
-  const ambientLight = new THREE.AmbientLight(0x404040) // soft white light
+  const dirLight = new THREE.DirectionalLight(0xffffff, 0.8)
+  dirLight.position.set(1, 0, 1)
+  threeStuffs.scene.add(dirLight)
+
+  const ambientLight = new THREE.AmbientLight(0xffffff, 0.4)
+  ambientLight.position.set(1, 0, 1)
   threeStuffs.scene.add(ambientLight)
 
-  const dirLight = new THREE.DirectionalLight(0xffffff)
-  dirLight.position.set(100, 1000, 100)
-  threeStuffs.scene.add(dirLight)
+  const spotLight = new THREE.SpotLight(0xffffff, 0.25)
+  spotLight.position.set(1, 0, 1)
+  threeStuffs.scene.add(spotLight)
 }
 
 
