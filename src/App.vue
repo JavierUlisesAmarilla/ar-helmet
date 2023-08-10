@@ -31,9 +31,9 @@ function init_threeScene(spec) {
   const loadingManager = new THREE.LoadingManager()
   const gltfLoader = new GLTFLoader(loadingManager)
   gltfLoader.load('models/helmet/helmet.glb', function (gltf) {
-    gltf.scene.scale.set(8, 8, 8)
+    gltf.scene.scale.set(7.5, 7.5, 7.5)
     gltf.scene.rotation.y = -Math.PI * 0.6
-    gltf.scene.position.set(0, 0.44, 0)
+    gltf.scene.position.set(0, 0.5, 0)
     helmetGltf = gltf
   })
 
