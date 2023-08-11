@@ -108,7 +108,7 @@ function init_threeScene(spec) {
 
   loadingManager.onLoad = () => {
     threeStuffs.faceObject.add(HELMETOBJ3D)
-    HELMETOBJ3D.add(faceMesh)
+    // HELMETOBJ3D.add(faceMesh)
     HELMETOBJ3D.add(helmetGltf.scene)
 
     helmetGltf.scene.traverse((child) => {
