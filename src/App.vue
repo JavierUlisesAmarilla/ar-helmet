@@ -2,7 +2,7 @@
 
 import { onMounted } from 'vue'
 import { TresCanvas } from '@tresjs/core'
-import { OrbitControls, useTweakPane } from '@tresjs/cientos'
+import { OrbitControls, useTweakPane, Environment } from '@tresjs/cientos'
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js'
 
 
@@ -241,12 +241,17 @@ onMounted(() => {
 
 <template>
   <TresCanvas id="jeeFaceFilterCanvas">
-    <!-- <TresPerspectiveCamera></TresPerspectiveCamera>
+    <!-- <Environment files="envMap/evening_road_01_puresky_4k.hdr"></Environment>
+    <TresPerspectiveCamera></TresPerspectiveCamera>
+    <TresDirectionalLight :intensity="1" :position="[1, 0, 1]"></TresDirectionalLight>
+    <TresAmbientLight :intensity="1" :position="[1, 0, 1]"></TresAmbientLight>
+    <TresSpotLight :intensity="1" :position="[1, 0, 1]"></TresSpotLight>
+
     <TresMesh>
       <TresTorusGeometry :args="[1, 0.5, 16, 32]"></TresTorusGeometry>
-      <TresMeshBasicMaterial color="orange"></TresMeshBasicMaterial>
+      <TresMeshPhongMaterial color="orange"></TresMeshPhongMaterial>
     </TresMesh>
-    <TresAmbientLight :intensity="1"></TresAmbientLight>
+
     <OrbitControls></OrbitControls> -->
   </TresCanvas>
 </template>
