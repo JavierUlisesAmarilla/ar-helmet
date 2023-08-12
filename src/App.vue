@@ -27,7 +27,7 @@ function init_threeScene(spec) {
   // CREATE THE HELMET MESH AND ADD IT TO THE SCENE:
   const threeStuffs = JeelizThreeHelper.init(spec, detect_callback)
   const HELMETOBJ3D = new THREE.Object3D()
-  // let faceMesh = null
+  let faceMesh = null
   let helmetGltf = null
 
   const loadingManager = new THREE.LoadingManager()
@@ -53,59 +53,59 @@ function init_threeScene(spec) {
     }
   )
 
-  // // CREATE THE MASK
-  // /*
-  //   faceLowPolyEyesEarsFill.json has been exported from dev/faceLowPolyEyesEarsFill.blend
-  //   using THREE.JS blender exporter with Blender v2.76
-  // */
-  // maskLoader.load('./models/face/faceLowPolyEyesEarsFill2.json', function (maskBufferGeometry) {
-  //   const vertexShaderSource = 'uniform mat2 videoTransformMat2;\n\
-  //   varying vec2 vUVvideo;\n\
-  //   varying float vY, vNormalDotZ;\n\
-  //   const float THETAHEAD = 0.25;\n\
-  //   void main() {;\n\
-  //     vec4 mvPosition = modelViewMatrix * vec4( position, 1.0);\n\
-  //     vec4 projectedPosition = projectionMatrix * mvPosition;\n\
-  //     gl_Position = projectedPosition;\n\
-  //     ;\n\
-  //     // compute UV coordinates on the video texture:;\n\
-  //     vec4 mvPosition0 = modelViewMatrix * vec4( position, 1.0 );\n\
-  //     vec4 projectedPosition0 = projectionMatrix * mvPosition0;\n\
-  //     vUVvideo = vec2(0.5,0.5) + videoTransformMat2 * projectedPosition0.xy/projectedPosition0.w;\n\
-  //     vY = position.y*cos(THETAHEAD)-position.z*sin(THETAHEAD);\n\
-  //     vec3 normalView = vec3(modelViewMatrix * vec4(normal,0.));\n\
-  //     vNormalDotZ = pow(abs(normalView.z), 1.5);\n\
-  //   }'
+  // CREATE THE MASK
+  /*
+    faceLowPolyEyesEarsFill.json has been exported from dev/faceLowPolyEyesEarsFill.blend
+    using THREE.JS blender exporter with Blender v2.76
+  */
+  maskLoader.load('./models/face/faceLowPolyEyesEarsFill2.json', function (maskBufferGeometry) {
+    const vertexShaderSource = 'uniform mat2 videoTransformMat2;\n\
+    varying vec2 vUVvideo;\n\
+    varying float vY, vNormalDotZ;\n\
+    const float THETAHEAD = 0.25;\n\
+    void main() {;\n\
+      vec4 mvPosition = modelViewMatrix * vec4( position, 1.0);\n\
+      vec4 projectedPosition = projectionMatrix * mvPosition;\n\
+      gl_Position = projectedPosition;\n\
+      ;\n\
+      // compute UV coordinates on the video texture:;\n\
+      vec4 mvPosition0 = modelViewMatrix * vec4( position, 1.0 );\n\
+      vec4 projectedPosition0 = projectionMatrix * mvPosition0;\n\
+      vUVvideo = vec2(0.5,0.5) + videoTransformMat2 * projectedPosition0.xy/projectedPosition0.w;\n\
+      vY = position.y*cos(THETAHEAD)-position.z*sin(THETAHEAD);\n\
+      vec3 normalView = vec3(modelViewMatrix * vec4(normal,0.));\n\
+      vNormalDotZ = pow(abs(normalView.z), 1.5);\n\
+    }'
 
-  //   const fragmentShaderSource = "precision lowp float;\n\
-  //   uniform sampler2D samplerVideo;\n\
-  //   varying vec2 vUVvideo;\n\
-  //   varying float vY, vNormalDotZ;\n\
-  //   void main() {;\n\
-  //     vec3 videoColor = texture2D(samplerVideo, vUVvideo).rgb;\n\
-  //     float darkenCoeff = smoothstep(-0.15, 0.05, vY);\n\
-  //     float borderCoeff = smoothstep(0.0, 0.55, vNormalDotZ);\n\
-  //     gl_FragColor = vec4(videoColor * (1.-darkenCoeff), borderCoeff );\n\
-  //   }"
+    const fragmentShaderSource = "precision lowp float;\n\
+    uniform sampler2D samplerVideo;\n\
+    varying vec2 vUVvideo;\n\
+    varying float vY, vNormalDotZ;\n\
+    void main() {;\n\
+      vec3 videoColor = texture2D(samplerVideo, vUVvideo).rgb;\n\
+      float darkenCoeff = smoothstep(-0.15, 0.05, vY);\n\
+      float borderCoeff = smoothstep(0.0, 0.55, vNormalDotZ);\n\
+      gl_FragColor = vec4(videoColor * (1.-darkenCoeff), borderCoeff );\n\
+    }"
 
-  //   const mat = new THREE.ShaderMaterial({
-  //     vertexShader: vertexShaderSource,
-  //     fragmentShader: fragmentShaderSource,
-  //     transparent: true,
-  //     flatShading: false,
-  //     uniforms: {
-  //       samplerVideo: { value: JeelizThreeHelper.get_threeVideoTexture() },
-  //       videoTransformMat2: { value: spec.videoTransformMat2 }
-  //     },
-  //     transparent: true
-  //   })
-  //   maskBufferGeometry.computeVertexNormals()
-  //   faceMesh = new THREE.Mesh(maskBufferGeometry, mat)
-  //   faceMesh.renderOrder = -10000
-  //   faceMesh.frustumCulled = false
-  //   faceMesh.scale.multiplyScalar(1.12)
-  //   faceMesh.position.set(0, 0.3, -0.25)
-  // })
+    const mat = new THREE.ShaderMaterial({
+      vertexShader: vertexShaderSource,
+      fragmentShader: fragmentShaderSource,
+      transparent: true,
+      flatShading: false,
+      uniforms: {
+        samplerVideo: { value: JeelizThreeHelper.get_threeVideoTexture() },
+        videoTransformMat2: { value: spec.videoTransformMat2 }
+      },
+      transparent: true
+    })
+    maskBufferGeometry.computeVertexNormals()
+    faceMesh = new THREE.Mesh(maskBufferGeometry, mat)
+    faceMesh.renderOrder = -10000
+    faceMesh.frustumCulled = false
+    faceMesh.scale.multiplyScalar(1.12)
+    faceMesh.position.set(0, 0.3, -0.25)
+  })
 
   // SET ENVIRONMENT
   new RGBELoader()
