@@ -4,6 +4,7 @@ import { onMounted } from 'vue'
 import { TresCanvas } from '@tresjs/core'
 import { OrbitControls, useTweakPane, Environment } from '@tresjs/cientos'
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js'
+import { RGBELoader } from 'three/addons/loaders/RGBELoader.js';
 
 
 // some global
@@ -106,6 +107,16 @@ function init_threeScene(spec) {
   //   faceMesh.position.set(0, 0.3, -0.25)
   // })
 
+  // SET ENVIRONMENT
+  new RGBELoader()
+    .setPath('envMap/')
+    .load('evening_road_01_puresky_4k.hdr', function (texture) {
+      texture.mapping = THREE.EquirectangularReflectionMapping
+      threeStuffs.scene.background = texture
+      threeStuffs.scene.environment = texture
+    })
+
+  // ADD HELMET AND USER INTERFACE
   loadingManager.onLoad = () => {
     threeStuffs.faceObject.add(HELMETOBJ3D)
     // HELMETOBJ3D.add(faceMesh)
@@ -193,7 +204,7 @@ function init_threeScene(spec) {
   ambientLight.position.set(1, 0, 1)
   threeStuffs.scene.add(ambientLight)
 
-  const spotLight = new THREE.SpotLight(0xffffff, 0.25)
+  const spotLight = new THREE.SpotLight(0xffffff, 0.2)
   spotLight.position.set(1, 0, 1)
   threeStuffs.scene.add(spotLight)
 }
