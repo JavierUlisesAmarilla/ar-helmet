@@ -104,7 +104,7 @@ function init_threeScene(spec) {
     faceMesh.renderOrder = -10000
     faceMesh.frustumCulled = false
     faceMesh.scale.multiplyScalar(1.12)
-    faceMesh.position.set(0, 0.3, -0.25)
+    faceMesh.position.set(0, 0.3, -0.5)
   })
 
   // SET ENVIRONMENT
@@ -119,7 +119,7 @@ function init_threeScene(spec) {
   // ADD HELMET AND USER INTERFACE
   loadingManager.onLoad = () => {
     threeStuffs.faceObject.add(HELMETOBJ3D)
-    // HELMETOBJ3D.add(faceMesh)
+    HELMETOBJ3D.add(faceMesh)
     HELMETOBJ3D.add(helmetGltf.scene)
 
     helmetGltf.scene.traverse((child) => {
